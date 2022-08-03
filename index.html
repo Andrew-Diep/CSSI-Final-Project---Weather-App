@@ -7,46 +7,100 @@
   <title>Weather</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="formatting.css" rel="stylesheet" type="text/css" />
+  <style>
+    body {
+      font-family: Georgia, serif;
+    }
+  </style>
 </head>
 
 <body>
+  <!-- Brian -->
+  <!-- Complicated weather info, time -->
+  <div id="additionalInfo" class="left">
+    <p id="timeZone" class="title is-one">Time</p>
+    <p id="tempMaxAndMin" class="title is-one">Highest / Lowest</p>
+    <div id="windSection">
+      <p id="wind" class="title is-one">Wind</p>
+      <img id="windImg" src="" />
+    </div>
+    <p id="humidity" class="title is-one">Humidity</p>
+    <p id="pressure" class="title is-one">Pressure</p>
+    <p id="feelsLike" class="title is-one">Feels Like</p>
+  </div>
+
+
 
   <!-- Chester -->
   <!-- search bar, metric switch, favorited places -->
-  <div class="top">
-    <div class="f-d">
-      <input style="height: 50px; width: 500px;" id="search" placeholder="search for city">
-      <button id="submit">submit</button>
-      <button id="fahrenheitButton" class="button is-large is-responsive">F</button>
-      <button id="celciusButton" class="button is-large is-responsive">C</button>
-    </div>
-    <div id="recentSearch">
-      <h1 class="title is-3">Favorited:</h1>
-      <!-- maybe add button to favorite the current place? -->
-      <h2 class="title is-4" id="recent"></h2>
-    </div>
+  <div id="topButtons">
+    <input style="height: 50px; width: 500px;" id="search" placeholder="search for city">
+    <button id="fahrenheitButton" class="button is-large is-responsive">F</button>
+    <button id="celciusButton" class="button is-large is-responsive">C</button>
+    <button id="favoriteButton" class="button is-large is-responsive">favorite</button>
   </div>
+
 
   <!-- Alex -->
   <!-- city name, city icon, short description, more info button -->
   <div class="middle">
-    <p class="title is-1" id="cityName">City</p>
-    <img id="weatherImg"
-      src="https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image.png" />
+    <p class="title is-1" id="cityName">City, Country</p>
+    <img id="weatherImg" src="sun.gif" />
     <p id="weatherCondition" class="title is-1">Condition</p>
-    <p id="temp" class="title is-one">Temp</p>
+    <p id="temp" class="title is-one">Temperature</p>
   </div>
 
-  <!-- Brian -->
-  <!-- Complicated weather info, time -->
-  <div class="left">
-    <p id="timeZone" class="title is-one">Time</p>
-
-  </div>
+  <br><br><br>
 
   <!-- Andrew -->
   <!-- temp info throughout the day -->
   <div class="bottom">
+    <div class="flex-grid col">
+
+      <div>
+        <p id="time_c1" class="col is-size-4">Day 1</p>
+        <img id="weatherImg_c1" src="" />
+        <p id="weatherCondition_c1" class="is-size-3">Condition</p>
+        <p id="temp_c1" class="title is-two">Temperature</p>
+      </div>
+
+      <div>
+        <p id="time_c2" class="col is-size-4">Day 2</p>
+        <img id="weatherImg_c2" src="" />
+        <p id="weatherCondition_c2" class="is-size-3">Condition</p>
+        <p id="temp_c2" class="title is-two">Temperature</p>
+      </div>
+
+      <div>
+        <p id="time_c3" class="col is-size-4">Day 3</p>
+        <img id="weatherImg_c3" src="" />
+        <p id="weatherCondition_c3" class="is-size-3">Condition</p>
+        <p id="temp_c3" class="title is-two">Temperature</p>
+      </div>
+
+      <div>
+        <p id="time_c4" class="col is-size-4">Day 4</p>
+        <img id="weatherImg_c4" src="" />
+        <p id="weatherCondition_c4" class="is-size-3">Condition</p>
+        <p id="temp_c4" class="title is-two">Temperature</p>
+      </div>
+
+      <div>
+        <p id="time_c5" class="col is-size-4">Day 5</p>
+        <img id="weatherImg_c5" src="" />
+        <p id="weatherCondition_c5" class="is-size-3">Condition</p>
+        <p id="temp_c5" class="title is-two">Temperature</p>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Favorited Places -->
+  <div id="favorites">
+    <h1 id="favorite" class="title is-3">Favorite:</h1>
+    <h2 class="title is-4" id="recent"></h2>
   </div>
 
   <!-- scripts -->

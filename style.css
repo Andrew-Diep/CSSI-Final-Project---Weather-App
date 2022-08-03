@@ -1,47 +1,25 @@
 html, body {
-  height: 100%;
-  width: 100%;
-  background-color:#6495ED;
+  background-color:#ffffff;
 }
-
-/* .top{
-  display: flex;
-  justify-content: center;
-  padding-top: 50px;
-  padding-left: 30%;
-} */
 
 #celciusButton{
-  background-color: blue;
+  background-color: #4b4bce;
   color: white;
+  height:60px;
+  width:60px;
 }
 #fahrenheitButton{
-  background-color: red;
+  background-color: #b53b3b;
   color: white;
+  height:60px;
+  width:60px;
 }
-.f-d{
-  padding-right:5%;
-  
-  
-}
-/* #search{
-  font-size: 50px;
-  
-} */
-/* .recentSearch{
-  padding-right:10%;
-} */
-#cityName{
-  display: flex;
-  justify-content: center;
-}
-#weatherImg{
-  padding-left:25%;
-  position: relative; 
-  top: -200px;
-} */
-/* #weatherCondition{
-  padding-left:45%;
- position: relative; 
-  top: -400px;
-}
+
+#search{
+  font-size: 30px;
+} 
+
+
+
+
+
