@@ -1,5 +1,8 @@
 html, body {
-  background-color:#ffffff;
+  font-family: Helvetica Neue, Sans-serif;
+/*   background-color:#ffffff; */
+   background-image: url("https://cdn.wallpapersafari.com/91/60/M9k5Ka.png");
+  background-size: 100% 100%;
 }
 
 #celciusButton{
@@ -18,7 +21,14 @@ html, body {
 #search{
   font-size: 30px;
 } 
+.hidden{
+  display:none;
+}
 
+#map{
+  height: 500px;
+  width: 100%;
+}
 
 
 

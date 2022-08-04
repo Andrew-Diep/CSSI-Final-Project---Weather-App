@@ -1,3 +1,8 @@
+// maps
+var map;
+var infowindow;
+var query = "Mountain View";
+
 // imperial --> farenheit(default)
 // metric --> celcius
 let units = "imperial";
@@ -91,7 +96,26 @@ const APIkey = "90cb3f88e7ce8b6b5c6847d4ff7a4195";
 const timeZoneHost = "https://api.ipgeolocation.io/timezone?apiKey=";
 const keyTimeZone = "b1b1a19ceead4339b5df5ede3fc37f80";
 
-
+// Initialize and add the map
+function initMap() {
+  infowindow = new google.maps.InfoWindow();
+  map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 11,
+  });
+  var request = {
+    query: query,
+    fields: ['name', 'geometry'],
+  };
+  var service = new google.maps.places.PlacesService(map);
+  service.findPlaceFromQuery(request, function(results, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        console.log("Map Signal");
+      }
+      map.setCenter(results[0].geometry.location);
+    }
+  });
+}
 
 // input: city name
 // output: object containing latitude and longitude
@@ -111,35 +135,27 @@ async function cityToCoord(city) {
   return coord;
 }
 
+let favoriteLocations = [];
 //favorite 
 const favoriteButton = document.querySelector("#favoriteButton");
 //localStorage.setItem("favorited", '');
 recentCity.innerHTML = localStorage.getItem("favorited");
 
-let favoriteLocations = [];
-
 function restoreFavorites() {
-  let i = 1;
-  let fav = document.querySelector(`#recent button:nth-child(${i})`);
-
-  while (fav != null) {
-    fav = document.querySelector(`#recent button:nth-child(${i})`);
+  for (let i = 1; i <= recentCity.childElementCount; i++) {
+    const fav = document.querySelector(`#recent button:nth-child(${i})`);
     fav.addEventListener("click", function() {
       input = fav.innerHTML;
       weatherHandler();
+      query = input;
+      initMap();
     });
 
     favoriteLocations.push(fav.innerHTML);
-    i++;
   }
 }
 
-restoreFavorites(); 
-// let fav = document.querySelector(`#recent button:nth-child(3)`);
-//     fav.addEventListener("click", function() {
-//       input = fav.innerHTML; 
-//       weatherHandler();
-//     });
+restoreFavorites();
 
 
 async function getCountryInfo(code) {
@@ -174,10 +190,14 @@ async function getForecast(lat, lon) {
 // output:12 hour time at position
 async function coordToTimeZone(lat, lon) {
   timeZoneURL = `${timeZoneHost}${keyTimeZone}&lat=${lat}&long=${lon}`;
-  const json = await fetch(timeZoneURL);
-  const data = await json.json();
-  const time = data.time_12;
-  return time;
+  const json = await fetch(timeZoneURL).then((response) => {
+    const data = json.json();
+    const time = data.time_12;
+    return time;
+  }).catch((error) => {
+    timeZoneHolder.classList.add("hidden");
+    return "";
+  });
 }
 
 // GETTING WEATHER DATA
@@ -241,6 +261,7 @@ function getWindInfo(data) {
     windDirection = "NW";
   }
   windIcon.setAttribute("src", "icons/" + windDirection + ".png");
+  windIcon.classList.remove("hidden");
   return "Wind: " + windSpeed + "mph " + windDirection;
 }
 
@@ -250,10 +271,6 @@ function getWeatherHumidity(data) {
 
 function getPressure(data) {
   return "Pressure: " + data.main.pressure + " hPa";
-}
-
-function getMaxAndMin(data) {
-  return "Highest: " + data.main.temp_max + " | Lowest: " + data.main.temp_min;
 }
 
 function getFeelsLike(data) {
@@ -297,10 +314,8 @@ async function updateWeather() {
   weathConHolder.innerHTML = getWeatherDesc(wData);
   tempHolder.innerHTML = getTemp(wData) + unitsSym;
   windHolder.innerHTML = getWindInfo(wData);
-  maxAndMinHolder.innerHTML = getMaxAndMin(wData);
   humidityHolder.innerHTML = getWeatherHumidity(wData);
   pressureHolder.innerHTML = getPressure(wData);
-  feelsLikeHolder.innerHTML = "Feels like:" + getFeelsLike(wData);
 }
 
 async function updateForecast() {
@@ -321,7 +336,7 @@ async function updateTemp() {
   const fData = await getForecast(lat, lon);
 
   tempHolder.innerHTML = getTemp(wData) + unitsSym;
-  maxAndMinHolder.innerHTML = "Highest: " + wData.main.temp_max + unitsSym + " | Lowest: " + wData.main.temp_min + unitsSym;
+  maxAndMinHolder.innerHTML = "H: " + wData.main.temp_max + unitsSym + " | L: " + wData.main.temp_min + unitsSym;
   feelsLikeHolder.innerHTML = "Feels like: " + getFeelsLike(wData) + unitsSym;
   for (let i = 1; i < 6; i++) {
     forecast.tempHolder[i - 1].innerHTML = getForecastTemp(fData, -8 + 8 * i) + unitsSym;
@@ -352,23 +367,17 @@ celcius.addEventListener("click", function() {
 
 searchBar.addEventListener("change", function() {
   input = searchBar.value;
+  query = input;
   searchBar.value = "";
   weatherHandler();
+  initMap();
 });
-
-favoriteLocations.toString = function() {
-  let str = "Favorited:"
-
-  for (let i = 0; i < favoriteLocations.length; i++) {
-    str += "</br>" + favoriteLocations[i];
-  }
-
-  return str;
-}
 
 function clickHandler() {
   console.log("clicked!");
 }
+
+//FAVORITES
 
 favoriteButton.addEventListener("click", function() {
   let noDuplicates = true;
@@ -390,11 +399,18 @@ favoriteButton.addEventListener("click", function() {
       input = createdButton.innerHTML;
       searchBar.value = "";
       weatherHandler();
+      query = input;
+      initMap();
     });
 
+    initMap();
+
     localStorage.setItem("favorited", recentCity.innerHTML);
+    console.log(localStorage.getItem("favorited"));
   }
 });
+
+
 
 
 

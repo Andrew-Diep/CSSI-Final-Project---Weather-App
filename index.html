@@ -8,9 +8,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link href="style.css" rel="stylesheet" type="text/css" />
   <link href="formatting.css" rel="stylesheet" type="text/css" />
-  <style>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <link rel="stylesheet" type="text/css" href="./style.css" />
+  <script type="module" src="./index.js"></script>
+    <style>
     body {
-      font-family: Georgia, serif;
+      font-family: Helvetica Neue, Sans-serif;
     }
   </style>
 </head>
@@ -19,37 +22,49 @@
   <!-- Brian -->
   <!-- Complicated weather info, time -->
   <div id="additionalInfo" class="left">
-    <p id="timeZone" class="title is-one">Time</p>
-    <p id="tempMaxAndMin" class="title is-one">Highest / Lowest</p>
+    <p id="timeZone" class="title is-4">Time</p>
+    <p id="tempMaxAndMin" class="title is-4">H° / L°</p>
     <div id="windSection">
-      <p id="wind" class="title is-one">Wind</p>
-      <img id="windImg" src="" />
+      <p id="wind" class="title is-4">Wind</p>
+      <img id="windImg" class="hidden" src="" />
     </div>
-    <p id="humidity" class="title is-one">Humidity</p>
-    <p id="pressure" class="title is-one">Pressure</p>
-    <p id="feelsLike" class="title is-one">Feels Like</p>
+    <p id="humidity" class="title is-4">Humidity</p>
+    <p id="pressure" class="title is-4">Pressure</p>
+    <p id="feelsLike" class="title is-4">Feels Like</p>
   </div>
+
+
 
 
 
   <!-- Chester -->
   <!-- search bar, metric switch, favorited places -->
-  <div id="topButtons">
-    <input style="height: 50px; width: 500px;" id="search" placeholder="search for city">
-    <button id="fahrenheitButton" class="button is-large is-responsive">F</button>
-    <button id="celciusButton" class="button is-large is-responsive">C</button>
-    <button id="favoriteButton" class="button is-large is-responsive">favorite</button>
+
+
+  <div>
+    <div id="topButtons">
+      <input style="height: 50px; width: 500px;" id="search" placeholder="search for city">
+      <button id="fahrenheitButton" class="button is-large is-responsive">F</button>
+      <button id="celciusButton" class="button is-large is-responsive">C</button>
+      <button id="favoriteButton" class="button is-large is-responsive">favorite</button>
+    </div>
   </div>
+
 
 
   <!-- Alex -->
   <!-- city name, city icon, short description, more info button -->
   <div class="middle">
+
+
     <p class="title is-1" id="cityName">City, Country</p>
-    <img id="weatherImg" src="sun.gif" />
+    <img id="weatherImg" src="icons/unknown.png" />
     <p id="weatherCondition" class="title is-1">Condition</p>
     <p id="temp" class="title is-one">Temperature</p>
+
   </div>
+
+
 
   <br><br><br>
 
@@ -92,10 +107,16 @@
         <p id="weatherCondition_c5" class="is-size-3">Condition</p>
         <p id="temp_c5" class="title is-two">Temperature</p>
       </div>
-
     </div>
+    
+      <!-- Andrew -->
+      <!--The div element for the map -->
+      <div id="map"></div>
+      <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVNQ5iKpUs73i5vzhiyoslQs-Q1jT5EgM&libraries=places&callback=initMap"
+        defer>
+        </script>
   </div>
-
 
   <!-- Favorited Places -->
   <div id="favorites">
