@@ -20,6 +20,7 @@ html, body {
 
 #search{
   font-size: 30px;
+  height: 60px;
 } 
 .hidden{
   display:none;

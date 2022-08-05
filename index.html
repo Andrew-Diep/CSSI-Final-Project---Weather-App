@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Weather</title>
+  <title>myCity</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link href="style.css" rel="stylesheet" type="text/css" />
   <link href="formatting.css" rel="stylesheet" type="text/css" />
@@ -22,7 +21,7 @@
   <!-- Brian -->
   <!-- Complicated weather info, time -->
   <div id="additionalInfo" class="left">
-    <p id="timeZone" class="title is-4">Time</p>
+    <p id="timeZone" class="title is-2">Time</p>
     <p id="tempMaxAndMin" class="title is-4">H° / L°</p>
     <div id="windSection">
       <p id="wind" class="title is-4">Wind</p>
@@ -43,10 +42,10 @@
 
   <div>
     <div id="topButtons">
-      <input style="height: 50px; width: 500px;" id="search" placeholder="search for city">
+      <input style="height: 60px; width: 500px;" id="search" placeholder="search for city">
       <button id="fahrenheitButton" class="button is-large is-responsive">F</button>
       <button id="celciusButton" class="button is-large is-responsive">C</button>
-      <button id="favoriteButton" class="button is-large is-responsive">favorite</button>
+      <button id="favoriteButton" class="button is-large is-responsive">Favorite</button>
     </div>
   </div>
 
@@ -69,7 +68,7 @@
   <br><br><br>
 
   <!-- Andrew -->
-  <!-- temp info throughout the day -->
+  <!-- temp info throughout the day and google maps-->
   <div class="bottom">
     <div class="flex-grid col">
 
@@ -109,7 +108,6 @@
       </div>
     </div>
     
-      <!-- Andrew -->
       <!--The div element for the map -->
       <div id="map"></div>
       <script

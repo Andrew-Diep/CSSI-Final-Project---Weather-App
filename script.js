@@ -94,7 +94,7 @@ const limit = 5;
 const key = "c9975c44f7ec4154c146d4b1f6ab38f8";
 const APIkey = "90cb3f88e7ce8b6b5c6847d4ff7a4195";
 const timeZoneHost = "https://api.ipgeolocation.io/timezone?apiKey=";
-const keyTimeZone = "b1b1a19ceead4339b5df5ede3fc37f80";
+const keyTimeZone = "0d7c87861f254d66ab92fefc2b818471";
 
 // Initialize and add the map
 function initMap() {
@@ -135,23 +135,49 @@ async function cityToCoord(city) {
   return coord;
 }
 
+function removeElement(element, array) {
+  const index = array.indexOf(element);
+
+  if (index > -1) {
+    array.splice(index, 1);
+  }
+}
+
+// favorite
+// The line below will delete all saved favorites
+// localStorage.setItem("favorited", '');
+
 let favoriteLocations = [];
-//favorite 
 const favoriteButton = document.querySelector("#favoriteButton");
-//localStorage.setItem("favorited", '');
 recentCity.innerHTML = localStorage.getItem("favorited");
 
 function restoreFavorites() {
   for (let i = 1; i <= recentCity.childElementCount; i++) {
-    const fav = document.querySelector(`#recent button:nth-child(${i})`);
-    fav.addEventListener("click", function() {
-      input = fav.innerHTML;
+    const container = document.querySelector(`#recent div:nth-child(${i})`);
+    const actionButton = container.querySelector("button:nth-child(1)");
+    const deleteButton = container.querySelector("button:nth-child(2)");
+    actionButton.addEventListener("click", function() {
+      input = actionButton.innerHTML;
       weatherHandler();
       query = input;
       initMap();
     });
 
-    favoriteLocations.push(fav.innerHTML);
+    actionButton.addEventListener("mouseover", function() {
+      deleteButton.classList.remove("hidden");
+    });
+
+    deleteButton.addEventListener("click", function() {
+      removeElement(actionButton.innerHTML, favoriteLocations);
+      container.remove();
+      localStorage.setItem("favorited", recentCity.innerHTML);
+    });
+
+    container.addEventListener("mouseleave", function() {
+      deleteButton.classList.add("hidden");
+    });
+
+    favoriteLocations.push(actionButton.innerHTML);
   }
 }
 
@@ -190,14 +216,16 @@ async function getForecast(lat, lon) {
 // output:12 hour time at position
 async function coordToTimeZone(lat, lon) {
   timeZoneURL = `${timeZoneHost}${keyTimeZone}&lat=${lat}&long=${lon}`;
-  const json = await fetch(timeZoneURL).then((response) => {
-    const data = json.json();
-    const time = data.time_12;
-    return time;
-  }).catch((error) => {
-    timeZoneHolder.classList.add("hidden");
-    return "";
-  });
+   const jsonTest = await fetch(timeZoneURL).then(function(response){
+     if(!response.ok){
+        timeZoneHolder.classList.add("hidden");
+        return;
+     }
+   }); 
+  const json = await fetch(timeZoneURL);
+  const data = await json.json();
+  const time = data.time_12;
+  return time;
 }
 
 // GETTING WEATHER DATA
@@ -367,9 +395,9 @@ celcius.addEventListener("click", function() {
 
 searchBar.addEventListener("change", function() {
   input = searchBar.value;
-  query = input;
   searchBar.value = "";
   weatherHandler();
+  query = input;
   initMap();
 });
 
@@ -391,22 +419,42 @@ favoriteButton.addEventListener("click", function() {
 
   if (noDuplicates && city != undefined) {
     favoriteLocations.push(city);
-    const createdButton = document.createElement("button");
-    recentCity.appendChild(createdButton);
-    createdButton.innerHTML = city;
+    const container = document.createElement("div");
+    const actionButton = document.createElement("button");
+    const deleteButton = document.createElement("button");
+    deleteButton.classList.add("hidden");
+    container.appendChild(actionButton);
+    container.appendChild(deleteButton);
+    recentCity.appendChild(container);
+    actionButton.innerHTML = city;
+    deleteButton.innerHTML = "X";
 
-    createdButton.addEventListener("click", function() {
-      input = createdButton.innerHTML;
+    actionButton.addEventListener("click", function() {
+      input = actionButton.innerHTML;
       searchBar.value = "";
       weatherHandler();
       query = input;
       initMap();
     });
 
+    actionButton.addEventListener("mouseenter", function() {
+      deleteButton.classList.remove("hidden");
+    })
+
+    deleteButton.addEventListener("click", function() {
+      removeElement(actionButton.innerHTML, favoriteLocations);
+      container.remove();
+      localStorage.setItem("favorited", recentCity.innerHTML);
+    });
+
+    container.addEventListener("mouseleave", function() {
+      console.log("howdy 13");
+      deleteButton.classList.add("hidden");
+    })
+    
     initMap();
 
     localStorage.setItem("favorited", recentCity.innerHTML);
-    console.log(localStorage.getItem("favorited"));
   }
 });
 

@@ -40,11 +40,12 @@
 }
 
 #favorites{
-  align-content: flex-start;
-  justify-content: flex-end;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
   position: absolute; 
   top: 0; 
-  right: 70px; 
+  right: 20px; 
 }
 
 #topButtons{
@@ -82,9 +83,43 @@ html, body {
 #recent {
   display: flex; 
   flex-direction: column; 
+  align-content: flex-end;
+  justify-content: center;
+  gap: 10px;
 }
 
-button{
-  width: 150px;
+#recent div {
+  position: relative;
+}
+
+#recent div button:nth-child(1) {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #008CBA;
+  text-align: left;
+  padding-right: 30px;
+/*   padding-top: 5px;
+  padding-bottom: 5px; */
+}
+
+#recent div button:nth-child(1):hover {
+  background-color: #008CBA;
+  color: white;
+}
+
+#recent div button:nth-child(2) {
+  position: relative;
+  right: 30px;
+  background-color:rgba(135,206,250,0);
+  color: #f44336;
+  border: none;
+  width: 30px;
+}
+
+
+#recent button{
   height: 40px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  font-size: 20px;
 }
